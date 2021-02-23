@@ -1,0 +1,53 @@
+name: CI / CD
+
+on:
+  push:
+    branches:
+      - development
+      - master
+  pull_request:
+    branches: '*'
+
+jobs:
+  main:
+    name: Test, Build & Deploy
+    runs-on: ubuntu-latest
+
+    env:
+      CI: true
+
+    timeout-minutes: 12
+
+    steps:
+      - name: Clean up running jobs
+        uses: rokroskar/workflow-run-cleanup-action@v0.2.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup repo
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - name: Cache Packages
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+        timeout-minutes: 1
+
+      - name: Install Packages
+        run: npm ci
+        timeout-minutes: 3
+
+      - name: Lint
+        run: |
+          npm run lint
+        timeout-minutes: 3
+
