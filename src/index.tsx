@@ -1,9 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import reportWebVitals from './reportWebVitals';
+import { OptionsProvider } from 'src/modules/context';
 
-ReactDOM.render(<React.StrictMode>Index</React.StrictMode>, document.getElementById('root'));
+import GlobalStyles from 'src/components/GlobalStyles';
+
+import reportWebVitals from './reportWebVitals';
+import Root from './Root';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <GlobalStyles />
+    <OptionsProvider>
+      <Root />
+    </OptionsProvider>
+  </React.StrictMode>,
+  document.getElementById('root'),
+);
+
+serviceWorkerRegistration.register();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
