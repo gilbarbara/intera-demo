@@ -5,8 +5,7 @@
 		"plugin:@typescript-eslint/recommended",
 		"plugin:import/typescript",
 		"plugin:prettier/recommended",
-		"prettier/react",
-		"prettier/standard"
+		"prettier"
 	],
 	"plugins": [
 		"simple-import-sort", "sort-destructure-keys"
@@ -22,6 +21,7 @@
     }
   ],
 	"rules": {
+    "@typescript-eslint/explicit-module-boundary-types": "off",
 		"@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-var-requires": "off",
 		"react-hooks/rules-of-hooks": "error",
@@ -42,7 +42,7 @@
 						"^react",
 						"^@?\\w"
 					],
-					["^src/config", "^src/modules"],
+					["^src/config", "^src/modules", "^src/locales"],
 					["^src/components", "^src/routes"],
 					["^src/types"],
 					["^test"],
